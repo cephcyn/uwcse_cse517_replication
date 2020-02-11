@@ -14,7 +14,8 @@ stop_words = set(stopwords.words('english'))
 
 def parse_reddit_csv(filename):
     print("Reading from", filename)
-    output = []
+    csv_cols = []
+    frequencies = {}
     with open(filename) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
@@ -29,7 +30,9 @@ def parse_reddit_csv(filename):
             post_tokens = [lemmatizer.lemmatize(w, 'v') for w in post_tokens]
             title_tokens = [lemmatizer.lemmatize(w, 'n') for w in title_tokens]
             title_tokens = [lemmatizer.lemmatize(w, 'v') for w in title_tokens]
-            output.append({'author': row['author'],
-                           'selftext': post_tokens,
-                           'title': title_tokens})
-    return output
+            csv_cols.append({'author': row['author'],
+                             'selftext': post_tokens,
+                             'title': title_tokens})
+            # TODO need to collect frequencies of words in the entire corpus
+            # TODO update frequencies mapping from word->count and also get a sum
+    return csv_cols, frequencies
