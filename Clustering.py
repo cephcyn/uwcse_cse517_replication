@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
-with open('sample1000_emb.pickle', 'rb') as handle:
+with open('sample1000_top_bow.pickle', 'rb') as handle:
     sen_emb = pickle.load(handle)
 
 d = pd.DataFrame(sen_emb).transpose()
