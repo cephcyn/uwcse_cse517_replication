@@ -1,0 +1,8 @@
+name: nlp
+dependencies:
+  - jupyter
+  - gensim
+  - numpy
+  - pandas
+  - nltk
+  - scikit-learn
