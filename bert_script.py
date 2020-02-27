@@ -4,16 +4,16 @@ from transformers import *
 # Transformers has a unified API
 # for 10 transformer architectures and 30 pretrained weights.
 #          Model          | Tokenizer          | Pretrained weights shortcut
-MODELS = [(BertModel,       BertTokenizer,       'bert-base-uncased'),
-          (OpenAIGPTModel,  OpenAIGPTTokenizer,  'openai-gpt'),
-          (GPT2Model,       GPT2Tokenizer,       'gpt2'),
-          (CTRLModel,       CTRLTokenizer,       'ctrl'),
-          (TransfoXLModel,  TransfoXLTokenizer,  'transfo-xl-wt103'),
-          (XLNetModel,      XLNetTokenizer,      'xlnet-base-cased'),
-          (XLMModel,        XLMTokenizer,        'xlm-mlm-enfr-1024'),
-          (DistilBertModel, DistilBertTokenizer, 'distilbert-base-cased'),
-          (RobertaModel,    RobertaTokenizer,    'roberta-base'),
-          (XLMRobertaModel, XLMRobertaTokenizer, 'xlm-roberta-base'),
+MODELS = [(BertModel,       BertTokenizer,       'bert-base-uncased')
+          #(OpenAIGPTModel,  OpenAIGPTTokenizer,  'openai-gpt'),
+          #(GPT2Model,       GPT2Tokenizer,       'gpt2'),
+          #(CTRLModel,       CTRLTokenizer,       'ctrl'),
+          #(TransfoXLModel,  TransfoXLTokenizer,  'transfo-xl-wt103'),
+          #(XLNetModel,      XLNetTokenizer,      'xlnet-base-cased'),
+          #(XLMModel,        XLMTokenizer,        'xlm-mlm-enfr-1024'),
+          #(DistilBertModel, DistilBertTokenizer, 'distilbert-base-cased'),
+          #(RobertaModel,    RobertaTokenizer,    'roberta-base'),
+          #(XLMRobertaModel, XLMRobertaTokenizer, 'xlm-roberta-base'),
          ]
 
 # To use TensorFlow 2.0 versions of the models, simply prefix the class names with 'TF', e.g. `TFRobertaModel` is the TF 2.0 counterpart of the PyTorch model `RobertaModel`
