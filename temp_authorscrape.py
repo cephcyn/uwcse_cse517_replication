@@ -5,7 +5,7 @@ import numpy as np
 import json
 
 version = 'preprocessed_1000sample'
-df_posts = pd.read_csv(f'data/final_proj_data_{version}.csv')
+df_posts = pd.read_csv(f'data/data_sample_13200.csv')
 
 def getAllType(username, contentType):
     n_posts = 500
@@ -30,11 +30,11 @@ def getAllType(username, contentType):
 sub_mappings = {}
 
 # Save preliminary total mappings file
-with open(f'data/authorsubs_{version}.json', 'w') as fp:
+with open(f'data/authorsubs.json', 'w') as fp:
     json.dump(sub_mappings, fp)
 
 for username in set(df_posts['author']):
-    with open(f'data/authorsubs_{version}.json', 'r') as fp:
+    with open(f'data/authorsubs.json', 'r') as fp:
         sub_mappings = json.load(fp)
     try:
         if username not in sub_mappings:
@@ -50,10 +50,10 @@ for username in set(df_posts['author']):
         print('failed to read', username)
     finally:
         # save what we have so far if the last read attempt failed
-        with open(f'data/authorsubs_{version}.json', 'w') as fp:
+        with open(f'data/authorsubs.json', 'w') as fp:
             json.dump(sub_mappings, fp)
         
 #     print('got subreddits for', username)
 
-with open(f'data/authorsubs_{version}.json', 'w') as fp:
+with open(f'data/authorsubs.json', 'w') as fp:
     json.dump(sub_mappings, fp)
