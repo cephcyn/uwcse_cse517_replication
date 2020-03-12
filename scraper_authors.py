@@ -10,8 +10,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--csv_file_name", required=True, help="Filename of the Reddit-scrape-data CSV we want author data for")
 parser.add_argument("--output", required=False, default='data/authorsubs.json', help="Filename to save to")
 args = parser.parse_args()
-print(' reading from', args.csv_file_name)
-print('outputting to', args.output)
+print(' reading from:', args.csv_file_name)
+print('outputting to:', args.output)
 
 df_posts = pd.read_csv(args.csv_file_name)
 
