@@ -7,7 +7,7 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("csv_file_name", help="Filename of the Reddit-scrape-data CSV we want author data for")
+parser.add_argument("csv_file_name", required=True, help="Filename of the Reddit-scrape-data CSV we want author data for")
 args = parser.parse_args()
 print(args.csv_file_name)
 
