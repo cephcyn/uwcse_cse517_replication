@@ -7,9 +7,11 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("csv_file_name", required=True, help="Filename of the Reddit-scrape-data CSV we want author data for")
+parser.add_argument("--csv_file_name", required=True, help="Filename of the Reddit-scrape-data CSV we want author data for")
+parser.add_argument("--output", required=False, default='data/authorsubs.json', help="Filename to save to")
 args = parser.parse_args()
-print(args.csv_file_name)
+print(' reading from', args.csv_file_name)
+print('outputting to', args.output)
 
 df_posts = pd.read_csv(args.csv_file_name)
 
@@ -38,7 +40,7 @@ t0 = time.process_time()
 sub_mappings = {}
 
 for username in set(df_posts['author']):
-    with open(f'data/authorsubs.json', 'r') as fp:
+    with open(args.output, 'r') as fp:
         sub_mappings = json.load(fp)
     try:
         if username not in sub_mappings:
@@ -54,12 +56,12 @@ for username in set(df_posts['author']):
         print('failed to read', username)
     finally:
         # save what we have so far if the last read attempt failed
-        with open(f'data/authorsubs.json', 'w') as fp:
+        with open(args.output, 'w') as fp:
             json.dump(sub_mappings, fp)
 
 #     print('got subreddits for', username)
 
 print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
 
-with open(f'data/authorsubs.json', 'w') as fp:
+with open(args.output, 'w') as fp:
     json.dump(sub_mappings, fp)
