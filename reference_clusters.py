@@ -29,7 +29,7 @@ def parse_reddit_csv(filename, setname, stop_words=None, lemmatizer=None, tokeni
         tokenizer = RegexpTokenizer(r'\w+')
 
     print(f'parse_reddit_csv({filename}, {setname})')
-    print('START:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     t0 = time.process_time()
     print("Reading from", filename)
     csv_cols = []
@@ -64,7 +64,7 @@ def parse_reddit_csv(filename, setname, stop_words=None, lemmatizer=None, tokeni
         pickle.dump(csv_cols, handle, protocol=pickle.HIGHEST_PROTOCOL)
     with open(f'partials/{setname}_parse_authors.pickle', 'wb') as handle:
         pickle.dump(authors, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    print('parse_reddit_csv ENDED:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('parse_reddit_csv ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return
 
 def embed_w2v(setname, model=None):
@@ -77,7 +77,7 @@ def embed_w2v(setname, model=None):
         model = gensim.models.KeyedVectors.load_word2vec_format('model/GoogleNews-vectors-negative300.bin', binary=True)
 
     print(f'embed_w2v({setname})')
-    print('START:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     t0 = time.process_time()
     # Build weighted embeddings
     weighted_emb = {}
@@ -116,7 +116,7 @@ def embed_w2v(setname, model=None):
         pickle.dump(weighted_emb, handle, protocol=pickle.HIGHEST_PROTOCOL)
     with open(f'partials/{setname}_embed_w2v_sif.pickle', 'wb') as handle:
         pickle.dump(sif_emb, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    print('embed_w2v ENDED:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('embed_w2v ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return
 
 def get_topics(dictionary, corpus, parsed):
@@ -172,7 +172,7 @@ def embed_lda(setname):
         parsed = pickle.load(handle)
 
     print(f'embed_lda({setname})')
-    print('START:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     t0 = time.process_time()
     # Create a dictionary representation of the documents.
     dictionary = Dictionary([parsed[i]['selftext'] for i in range(len(parsed))])
@@ -209,7 +209,7 @@ def embed_lda(setname):
         pickle.dump(model_tfidf, handle, protocol=pickle.HIGHEST_PROTOCOL)
     with open(f'partials/{setname}_embed_top_tfidf.pickle', 'wb') as handle:
         pickle.dump(sen_top_tfidf, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    print('embed_lda ENDED:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('embed_lda ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return
 
 def similarity_clustering(similarity_dict, m, n):
@@ -248,7 +248,7 @@ def clust_any(setname, embedname, numClusters):
         sen_emb = pickle.load(handle)
 
     print(f'clust_any({setname}, {embedname}, {numClusters})')
-    print('START:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     print('clustering dataset:', setname, '; embeds:', embedname)
     t0 = time.process_time()
     numTotalPosts = len(parsed)
@@ -277,7 +277,7 @@ def clust_any(setname, embedname, numClusters):
 
     with open(f'partials/{setname}_clustdict_{embedname}.pickle', 'wb') as handle:
         pickle.dump(transformed_cluster, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    print('clust_any ENDED:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('clust_any ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return
 
 def score_sas(setname, embedname):
@@ -291,7 +291,7 @@ def score_sas(setname, embedname):
         authors = pickle.load(handle)
 
     print(f'score_sas({setname}, {embedname})')
-    print('START:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     print('scoring dataset:', setname, '; embeds:', embedname)
     t0 = time.process_time()
 
@@ -311,7 +311,7 @@ def score_sas(setname, embedname):
 
     score_sas = (num_clust_pair / num_total_pair) - (1/len(clusters))
     print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
-    print('score_sas ENDED:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('score_sas ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return score_sas
 
 def score_jaccard(setname, embedname):
@@ -331,7 +331,7 @@ def score_jaccard(setname, embedname):
         sub_mappings = json.load(fp)
 
     print(f'score_jaccard({setname}, {embedname})')
-    print('START:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     print('scoring dataset:', setname, '; embeds:', embedname)
     t0 = time.process_time()
 
@@ -382,7 +382,7 @@ def score_jaccard(setname, embedname):
 #             intersect_sum += 0.5 * (comment_subscore + submits_subscore)
     score_jaccard = intersect_sum * len(clusters) / (len(clustdict) ** 2)
     print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
-    print('score_jaccard ENDED:', time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('score_jaccard ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return score_jaccard
 
 # Load constants / large loading items
@@ -409,19 +409,19 @@ embed_w2v(setname, model=model)
 embed_lda(setname)
 
 # Cluster and score in loops
-embed_types = ['top_tfidf', 'top_bow', 'w2v_weighted', 's2v_sif']
+embed_types = ['top_tfidf', 'top_bow', 'w2v_weighted', 'w2v_sif']
 scores = {
     'sas': {
         'top_tfidf': [],
         'top_bow': [],
         'w2v_weighted': [],
-        's2v_sif': [],
+        'w2v_sif': [],
     },
     'jaccard': {
         'top_tfidf': [],
         'top_bow': [],
         'w2v_weighted': [],
-        's2v_sif': [],
+        'w2v_sif': [],
     }
 }
 for i in range(100):
@@ -434,4 +434,4 @@ for i in range(100):
 # Save scores
 time_string = time.strftime("%Y%m%d-%H%M%S", time.localtime())
 with open(f'outputs/{setname}_scores_{time_string}.pickle', 'wb') as handle:
-    pickle.dump(transformed_cluster, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    pickle.dump(scores, handle, protocol=pickle.HIGHEST_PROTOCOL)
