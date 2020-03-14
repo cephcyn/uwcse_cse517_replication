@@ -33,7 +33,7 @@ echo {} > data/authorsubs_${EXPERIMENT_SIZE}.json
 python3 scrape_author_data.py --csv_file_name data/data_sample_${EXPERIMENT_SIZE}.csv --output data/authorsubs_${EXPERIMENT_SIZE}.json >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt &
 
 # Parse the experiment sample data into something more helpful
-python3 parse_reddit_csv --csv_file_name data_sample_${EXPERIMENT_SIZE}.csv --experiment_name ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt
+python3 parse_reddit_csv --csv_file_name data/data_sample_${EXPERIMENT_SIZE}.csv --experiment_name ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt
 
 # NOTE: for all embed systems, we use the same topic/cluster count hyperparam
 # (30) regardless of the number of final clusters produced.

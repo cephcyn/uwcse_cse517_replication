@@ -3,6 +3,7 @@ import nltk
 from nltk.tokenize import word_tokenize, RegexpTokenizer
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+import pickle
 import re
 import time
 import argparse
