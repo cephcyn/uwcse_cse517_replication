@@ -104,3 +104,11 @@ failed to read sofdadof
 failed to read chuankaimah
 failed to read The785
 PROCESS TIME ELAPSED (s) 490.336474577
+reading from: data/data_sample_2200.csv
+experiment name: 2200
+  (outputting to: partials/2200_parse.pickle )
+  (outputting to: partials/2200_parse_authors.pickle )
+parse_reddit_csv(data/data_sample_2200.csv, 2200) START: 20200314-161211
+Reading from data/data_sample_2200.csv
+parse_reddit_csv(data/data_sample_2200.csv, 2200) ELAPSED(s) 3.6758851389999996
+parse_reddit_csv ENDED: 20200314-161215
