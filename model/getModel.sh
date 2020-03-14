@@ -6,3 +6,5 @@
 # https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit
 # and save it to this directory as
 # GoogleNews-vectors-negative300.bin.gz
+# then unpack it so that you get
+# GoogleNews-vectors-negative300.bin

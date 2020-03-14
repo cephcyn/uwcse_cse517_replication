@@ -1,6 +1,8 @@
+import gensim
 from collections import Counter
 import pickle
 import numpy as np
+import pandas as pd
 from sklearn.decomposition import PCA
 import time
 import argparse

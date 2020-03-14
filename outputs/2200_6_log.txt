@@ -112,3 +112,15 @@ parse_reddit_csv(data/data_sample_2200.csv, 2200) START: 20200314-161211
 Reading from data/data_sample_2200.csv
 parse_reddit_csv(data/data_sample_2200.csv, 2200) ELAPSED(s) 3.6758851389999996
 parse_reddit_csv ENDED: 20200314-161215
+experiment name: 2200
+embed_lda(2200) START: 20200314-161929
+Generating topics for BOW...
+Average topic coherence: -4.4784.
+Generating topics for TFIDF...
+Average topic coherence: -3.6176.
+embed_lda(2200) ELAPSED (s) 114.894513624
+embed_lda ENDED: 20200314-162124
+experiment name: 2200
+embed_w2v(2200) START: 20200314-162148
+embed_w2v(2200) ELAPSED(s) 12.230513727000002
+embed_w2v ENDED: 20200314-162202
