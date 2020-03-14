@@ -7,9 +7,9 @@ NUM_LOOPS=100
 # Before running this script!!!!!
 # STEP 1: make sure you have python dependencies installed
   # environment needs:
-  # pandas, matplotlib, numpy
+  # pandas, matplotlib, numpy, sklearn, gensim, nltk, torch, transformers
 # STEP 2: download the word2vec model (unfortunately can't do this in bash)
-  # TODO add notes on how to do that
+  # See model/getModel.sh for notes on how to download the word2vec model
 
 # Note that we ran our experiments primarily from the Jupyter notebooks, so this
 # may be buggy.
