@@ -13,6 +13,14 @@ args = parser.parse_args()
 print(' reading from:', args.csv_file_name)
 print('outputting to:', args.output)
 
+# Collect comment & submission subreddit data for authors in our sample
+# Code adapted from scraper_authors.ipynb
+# Originally primarily written by Joyce Zhou
+
+print(f'scrape_author_data({args.csv_file_name}, {args.output})')
+print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+t0 = time.process_time()
+
 df_posts = pd.read_csv(args.csv_file_name)
 
 def getAllType(username, contentType):
@@ -33,8 +41,6 @@ def getAllType(username, contentType):
         created_utc_last = df_content.tail(1)['created_utc'].copy().reset_index()
         created_utc_last = created_utc_last['created_utc'][0]
     return df_content
-
-t0 = time.process_time()
 
 # Build subreddit mappings
 sub_mappings = {}
@@ -61,7 +67,8 @@ for username in set(df_posts['author']):
 
 #     print('got subreddits for', username)
 
-print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
-
 with open(args.output, 'w') as fp:
     json.dump(sub_mappings, fp)
+
+print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
+print('scrape_author_data ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
