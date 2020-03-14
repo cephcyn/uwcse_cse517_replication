@@ -50,4 +50,7 @@ wait
 python3 cluster_and_score.py --experiment_name ${EXPERIMENT_SIZE} --num_clusters ${NUM_CLUSTERS} --num_loops ${NUM_LOOPS} >> outputs/${EXPERIMENT_SIZE}_log.txt
 
 # Produce output files that we can more easily analyze
-# TODO need to update the notebook to actually use the understandable format
+python3 print_output.py --experiment_name ${EXPERIMENT_SIZE}
+
+echo Scores saved to outputs/${EXPERIMENT_SIZE}_scores.csv
+echo Times saved to outputs/${EXPERIMENT_SIZE}_times.csv
