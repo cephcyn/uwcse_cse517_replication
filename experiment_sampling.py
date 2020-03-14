@@ -1,4 +1,5 @@
 import pandas as pd
+import time
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -12,8 +13,7 @@ print('experiment sample size:', args.num_posts)
 # Code adapted from sampling_for_experiments.ipynb, data/bert_title_text.ipynb
 # Originally primarily written by Regina Cheng
 
-print(f'sample_experiment_data({args.csv_source}, {args.num_posts})')
-print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+print(f'sample_experiment_data({args.csv_source}, {args.num_posts}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
 t0 = time.process_time()
 
 all = pd.read_csv(args.csv_source)
@@ -38,5 +38,5 @@ def csv_to_dict(csv_file):
 csv_file = f'data/data_sample_{s}.csv'
 csv_to_dict(csv_file)
 
-print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
+print(f'sample_experiment_data({args.csv_source}, {args.num_posts}) ELAPSED(s)', time.process_time() - t0)
 print('sample_experiment_data ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))

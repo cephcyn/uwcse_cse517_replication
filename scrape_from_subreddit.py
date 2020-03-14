@@ -3,6 +3,7 @@ import pandas as pd
 from pandas.io.json import json_normalize
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -18,8 +19,7 @@ print('outputting preprocessed data CSV to:', args.output_preprocess)
 # Code adapted from scraper_posts.ipynb
 # Originally primarily written by Regina Cheng
 
-print(f'scrape_post_data({args.csv_file_name}, {args.output})')
-print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+print(f'scrape_post_data({args.csv_file_name}, {args.output}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
 t0 = time.process_time()
 
 with urllib.request.urlopen(f"https://api.pushshift.io/reddit/search/submission/?subreddit={args.subreddit}&size=1&sort=asc&before=30d") as url:
@@ -59,5 +59,5 @@ d = d[d.score >= 3]
 d = d[d.selftext.str.len()>=5]
 d.to_csv(args.output_preprocess)
 
-print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
+print(f'scrape_post_data({args.csv_file_name}, {args.output}) ELAPSED(s)', time.process_time() - t0)
 print('scrape_post_data ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))

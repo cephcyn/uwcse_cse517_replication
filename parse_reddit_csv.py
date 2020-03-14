@@ -4,6 +4,7 @@ from nltk.tokenize import word_tokenize, RegexpTokenizer
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import re
+import time
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -14,6 +15,10 @@ print('reading from:', args.csv_file_name)
 print('experiment name:', args.experiment_name)
 print('  (outputting to:', f'partials/{args.experiment_name}_parse.pickle', ')')
 print('  (outputting to:', f'partials/{args.experiment_name}_parse_authors.pickle', ')')
+
+# Tokenize, lemmatize, and build an author mapping for the collected sample CSV
+# Code adapted from reference_clusters.ipynb
+# Originally primarily written by Joyce Zhou
 
 nltk.download('wordnet')
 lemmatizer = WordNetLemmatizer()
@@ -32,8 +37,7 @@ def parse_reddit_csv(filename, setname, stop_words=None, lemmatizer=None, tokeni
         stop_words = set(stopwords.words('english'))
         tokenizer = RegexpTokenizer(r'\w+')
 
-    print(f'parse_reddit_csv({filename}, {setname})')
-    print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print(f'parse_reddit_csv({filename}, {setname}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     t0 = time.process_time()
     print("Reading from", filename)
     csv_cols = []
@@ -63,7 +67,7 @@ def parse_reddit_csv(filename, setname, stop_words=None, lemmatizer=None, tokeni
             if row['author'] not in authors:
                 authors[row['author']] = []
             authors[row['author']].append(row['id'])
-    print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
+    print(f'parse_reddit_csv({filename}, {setname}) ELAPSED(s)', time.process_time() - t0)
     with open(f'partials/{setname}_parse.pickle', 'wb') as handle:
         pickle.dump(csv_cols, handle, protocol=pickle.HIGHEST_PROTOCOL)
     with open(f'partials/{setname}_parse_authors.pickle', 'wb') as handle:

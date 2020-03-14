@@ -17,8 +17,7 @@ print('outputting to:', args.output)
 # Code adapted from scraper_authors.ipynb
 # Originally primarily written by Joyce Zhou
 
-print(f'scrape_author_data({args.csv_file_name}, {args.output})')
-print('START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+print(f'scrape_author_data({args.csv_file_name}, {args.output}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
 t0 = time.process_time()
 
 df_posts = pd.read_csv(args.csv_file_name)
@@ -70,5 +69,5 @@ for username in set(df_posts['author']):
 with open(args.output, 'w') as fp:
     json.dump(sub_mappings, fp)
 
-print('PROCESS TIME ELAPSED (s)', time.process_time() - t0)
+print(f'scrape_author_data({args.csv_file_name}, {args.output}) ELAPSED(s)', time.process_time() - t0)
 print('scrape_author_data ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
