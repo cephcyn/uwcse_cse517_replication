@@ -181,7 +181,7 @@ def score_jaccard(setname, embedname, num_clusters):
     with open(f'partials/{setname}_parse_authors.pickle', 'rb') as handle:
         authors = pickle.load(handle)
     # Read author subreddits
-    with open(f'data/authorsubs.json', 'r') as fp:
+    with open(f'data/authorsubs_{setname}.json', 'r') as fp:
         sub_mappings = json.load(fp)
 
     print(f'score_jaccard({setname}, {embedname}, {num_clusters}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
