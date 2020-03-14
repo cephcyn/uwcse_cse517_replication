@@ -20,8 +20,8 @@ all = pd.read_csv(args.csv_source)
 
 d_all = all[['id', 'author', 'title', 'selftext']]
 
-d_2200 = d_all.sample(args.num_posts)
-d_2200.to_csv(f'data/data_sample_{args.num_posts}.csv')
+d_sample = d_all.sample(args.num_posts)
+d_sample.to_csv(f'data/data_sample_{args.num_posts}.csv')
 
 def csv_to_dict(csv_file):
     d = pd.read_csv(csv_file)
@@ -31,11 +31,11 @@ def csv_to_dict(csv_file):
     text = d.selftext.to_list( )
     title = d.title.to_list( )
     data = dict(zip(post_id,zip(title, text)))
-    file_name = 'data/bert_title_text%d.pickle' %size
+    file_name = f'data/bert_title_text{size}.pickle'
     with open(file_name, 'wb') as handle:
         pickle.dump(data,handle)
 
-csv_file = f'data/data_sample_{s}.csv'
+csv_file = f'data/data_sample_{args.num_posts}.csv'
 csv_to_dict(csv_file)
 
 print(f'sample_experiment_data({args.csv_source}, {args.num_posts}) ELAPSED(s)', time.process_time() - t0)

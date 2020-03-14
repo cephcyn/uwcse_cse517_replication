@@ -10,6 +10,10 @@ parser.add_argument("--experiment_name", required=True, help="Name of the experi
 args = parser.parse_args()
 print('experiment name:', args.experiment_name)
 
+# Write Latent Dirichlet Embeddings for the given experiment.
+# Code adapted from reference_clusters.ipynb
+# Originally primarily written by Joyce Zhou
+
 def get_topics(dictionary, corpus, parsed):
     # Train LDA model, get model & topic vectors
     # Set training parameters.
@@ -64,6 +68,7 @@ def embed_lda(setname):
 
     print(f'embed_lda({setname}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     t0 = time.process_time()
+    
     # Create a dictionary representation of the documents.
     dictionary = Dictionary([parsed[i]['selftext'] for i in range(len(parsed))])
     # print(dictionary)

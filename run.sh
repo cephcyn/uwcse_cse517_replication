@@ -2,6 +2,7 @@
 # we ran with 1000, 2200, 4400, 8800, 13200
 EXPERIMENT_SIZE=1000 # Also doubles as the experiment name
 NUM_CLUSTERS=6
+NUM_LOOPS=100
 
 # Before running this script!!!!!
 # STEP 1: make sure you have python dependencies installed
@@ -33,18 +34,20 @@ python3 scrape_author_data.py --csv_file_name data/data_sample_${EXPERIMENT_SIZE
 # Parse the experiment sample data into something more helpful
 python3 parse_reddit_csv --csv_file_name data_sample_${EXPERIMENT_SIZE}.csv --experiment_name ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_log.txt
 
+# Perform BERT similarity table generation
+python3 bert_similarity.py --experiment_name ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_log.txt &
+
 # Perform W2V embed generation
 python3 embed_w2v.py --experiment_name ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_log.txt &
 
 # Perform LDA embed generation
 python3 embed_lda.py --experiment_name ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_log.txt &
 
-# Perform BERT similarity table generation
-
-# we need to have author data done for the following steps...
+# we need to have author data, embeds, and BERT done for the following steps...
 wait
 
 # Perform clustering and scoring for W2V, LDA, BERT
+python3 cluster_and_score.py --experiment_name ${EXPERIMENT_SIZE} --num_clusters ${NUM_CLUSTERS} --num_loops ${NUM_LOOPS} >> outputs/${EXPERIMENT_SIZE}_log.txt
 
 # Produce output files that we can more easily analyze
 # TODO need to update the notebook to actually use the understandable format
