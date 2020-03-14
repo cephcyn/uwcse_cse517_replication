@@ -21,10 +21,13 @@ touch outputs/${EXPERIMENT_SIZE}_log.txt
 python3 scrape_from_subreddit.py  >> outputs/${EXPERIMENT_SIZE}_log.txt
 
 # break that collection down into smaller experiment sizes
-python3 experiment_sampling.py --num_posts ${EXPERIMENT_SIZE}  >> outputs/${EXPERIMENT_SIZE}_log.txt
+python3 experiment_sampling.py --num_posts ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_log.txt
 
-# get author data for all of the posts in our sample ...
+# get author data for all of the posts in our sample
 python3 scrape_author_data.py --csv_file_name data/data_sample_${EXPERIMENT_SIZE}.csv --output data/authorsubs${EXPERIMENT_SIZE}.json >> outputs/${EXPERIMENT_SIZE}_log.txt &
+
+# Parse the experiment sample data into something more helpful
+python3 parse_reddit_csv --csv_file_name data_sample_${EXPERIMENT_SIZE}.csv --experiment_name ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_log.txt
 
 # Perform W2V, LDA embed generation
 
