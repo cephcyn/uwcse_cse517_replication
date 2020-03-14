@@ -9,7 +9,7 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--experiment_name", required=True, help="Name of the experiment we want to save parse for")
+parser.add_argument("--experiment_name", required=True, help="Name of the experiment we want to get embeds for")
 parser.add_argument("--num_clusters", required=True, type=int, help="The number of clusters to make")
 parser.add_argument("--num_loops", required=False, type=int, default=100, help="The number of clusters to make")
 args = parser.parse_args()
@@ -69,7 +69,7 @@ def clust_any_ref(setname, embedname, numClusters):
     cluster = similarity_clustering(post_emb, numClusters, numTotalPosts)
     # print(cluster)
 
-    with open(f'partials/{setname}_clust_{embedname}.pickle', 'wb') as handle:
+    with open(f'partials/{setname}_{numClusters}_clust_{embedname}.pickle', 'wb') as handle:
         pickle.dump(cluster, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     # Transform clusters into a post_id:cluster_id dict
@@ -83,7 +83,7 @@ def clust_any_ref(setname, embedname, numClusters):
 
     print(f'clust_any_ref({setname}, {embedname}, {numClusters}) ELAPSED(s)', time.process_time() - t0)
 
-    with open(f'partials/{setname}_clustdict_{embedname}.pickle', 'wb') as handle:
+    with open(f'partials/{setname}_{numClusters}_clustdict_{embedname}.pickle', 'wb') as handle:
         pickle.dump(transformed_cluster, handle, protocol=pickle.HIGHEST_PROTOCOL)
     print('clust_any_ref ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return
@@ -108,7 +108,7 @@ def clust_any_bert(setname, embedname, numClusters):
     cluster = similarity_clustering(post_emb, numClusters, numTotalPosts)
     # print(cluster)
 
-    with open(f'partials/{setname}_clust_{embedname}.pickle', 'wb') as handle:
+    with open(f'partials/{setname}_{numClusters}_clust_{embedname}.pickle', 'wb') as handle:
         pickle.dump(cluster, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     # Transform clusters into a post_id:cluster_id dict
@@ -122,7 +122,7 @@ def clust_any_bert(setname, embedname, numClusters):
 
     print(f'clust_any_bert({setname}, {embedname}, {numClusters}) ELAPSED(s)', time.process_time() - t0)
 
-    with open(f'partials/{setname}_clustdict_{embedname}.pickle', 'wb') as handle:
+    with open(f'partials/{setname}_{numClusters}_clustdict_{embedname}.pickle', 'wb') as handle:
         pickle.dump(transformed_cluster, handle, protocol=pickle.HIGHEST_PROTOCOL)
     print('clust_any_bert ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return
@@ -264,7 +264,7 @@ scores = {
     }
 }
 
-print(f'score_loop({setname}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+print(f'score_loop({setname}_{num_clusters}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
 t0 = time.process_time()
 
 # Do it for the reference models
@@ -273,17 +273,17 @@ for i in range(num_loops):
     for embed_name in embed_types:
         clust_any_ref(setname, embed_name, num_clusters)
     for embed_name in embed_types:
-        scores['sas'][embed_name].append(score_sas(setname, embed_name))
-        scores['jaccard'][embed_name].append(score_jaccard(setname, embed_name))
+        scores['sas'][embed_name].append(score_sas(f'{setname}_{num_clusters}', embed_name))
+        scores['jaccard'][embed_name].append(score_jaccard(f'{setname}_{num_clusters}', embed_name))
 
 # Do it for BERT
 for i in range(num_loops):
     clust_any_bert(setname, 'bert', num_clusters)
-    scores['sas']['bert'].append(score_sas(setname, 'bert'))
-    scores['jaccard']['bert'].append(score_jaccard(setname, 'bert'))
+    scores['sas']['bert'].append(score_sas(f'{setname}_{num_clusters}', 'bert'))
+    scores['jaccard']['bert'].append(score_jaccard(f'{setname}_{num_clusters}', 'bert'))
 
 # Save scores
-print(f'score_loop({setname}) ELAPSED(s)', time.process_time() - t0)
+print(f'score_loop({setname}_{num_clusters}) ELAPSED(s)', time.process_time() - t0)
 print('score_loop ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
-with open(f'outputs/{setname}_scores.pickle', 'wb') as handle:
+with open(f'outputs/{setname}_{num_clusters}_scores.pickle', 'wb') as handle:
     pickle.dump(scores, handle, protocol=pickle.HIGHEST_PROTOCOL)
