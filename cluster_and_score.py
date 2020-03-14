@@ -131,18 +131,18 @@ def clust_any_bert(setname, embedname, numClusters):
 # Code adapted from reference_clusters.ipynb
 # Originally primarily written by Joyce Zhou
 
-def score_sas(setname, embedname):
+def score_sas(setname, embedname, num_clusters):
     # Read clusters
-    with open(f'partials/{setname}_clust_{embedname}.pickle', 'rb') as handle:
+    with open(f'partials/{setname}_{num_clusters}_clust_{embedname}.pickle', 'rb') as handle:
         clusters = pickle.load(handle)
-    with open(f'partials/{setname}_clustdict_{embedname}.pickle', 'rb') as handle:
+    with open(f'partials/{setname}_{num_clusters}_clustdict_{embedname}.pickle', 'rb') as handle:
         clustdict = pickle.load(handle)
     # Read author list
     with open(f'partials/{setname}_parse_authors.pickle', 'rb') as handle:
         authors = pickle.load(handle)
 
-    print(f'score_sas({setname}, {embedname}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
-    print('scoring dataset:', setname, '; embeds:', embedname)
+    print(f'score_sas({setname}, {embedname}, {num_clusters}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('scoring dataset:', setname, '; embeds:', num_clusters, '; embeds:', num_clusters)
     t0 = time.process_time()
 
     num_clust_pair = 0
@@ -160,7 +160,7 @@ def score_sas(setname, embedname):
                 num_clust_pair += 1
 
     score_sas = (num_clust_pair / num_total_pair) - (1/len(clusters))
-    print(f'score_sas({setname}, {embedname}) ELAPSED(s)', time.process_time() - t0)
+    print(f'score_sas({setname}, {embedname}, {num_clusters}) ELAPSED(s)', time.process_time() - t0)
     print('score_sas ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return score_sas
 
@@ -168,14 +168,14 @@ def score_sas(setname, embedname):
 # Code adapted from reference_clusters.ipynb
 # Originally primarily written by Joyce Zhou
 
-def score_jaccard(setname, embedname):
+def score_jaccard(setname, embedname, num_clusters):
     # Read post data
     with open(f'partials/{setname}_parse.pickle', 'rb') as handle:
         parsed = pickle.load(handle)
     # Read clusters
-    with open(f'partials/{setname}_clust_{embedname}.pickle', 'rb') as handle:
+    with open(f'partials/{setname}_{num_clusters}_clust_{embedname}.pickle', 'rb') as handle:
         clusters = pickle.load(handle)
-    with open(f'partials/{setname}_clustdict_{embedname}.pickle', 'rb') as handle:
+    with open(f'partials/{setname}_{num_clusters}_clustdict_{embedname}.pickle', 'rb') as handle:
         clustdict = pickle.load(handle)
     # Read author list
     with open(f'partials/{setname}_parse_authors.pickle', 'rb') as handle:
@@ -184,8 +184,8 @@ def score_jaccard(setname, embedname):
     with open(f'data/authorsubs.json', 'r') as fp:
         sub_mappings = json.load(fp)
 
-    print(f'score_jaccard({setname}, {embedname}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
-    print('scoring dataset:', setname, '; embeds:', embedname)
+    print(f'score_jaccard({setname}, {embedname}, {num_clusters}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+    print('scoring dataset:', setname, '; embeds:', embedname, '; num_clusters:', num_clusters)
     t0 = time.process_time()
 
     # Transform parsed into something more usable for Jaccard
@@ -234,7 +234,7 @@ def score_jaccard(setname, embedname):
 #             )
 #             intersect_sum += 0.5 * (comment_subscore + submits_subscore)
     score_jaccard = intersect_sum * len(clusters) / (len(clustdict) ** 2)
-    print(f'score_jaccard({setname}, {embedname}) ELAPSED(s)', time.process_time() - t0)
+    print(f'score_jaccard({setname}, {embedname}, {num_clusters}) ELAPSED(s)', time.process_time() - t0)
     print('score_jaccard ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     return score_jaccard
 
@@ -273,14 +273,14 @@ for i in range(num_loops):
     for embed_name in embed_types:
         clust_any_ref(setname, embed_name, num_clusters)
     for embed_name in embed_types:
-        scores['sas'][embed_name].append(score_sas(f'{setname}_{num_clusters}', embed_name))
-        scores['jaccard'][embed_name].append(score_jaccard(f'{setname}_{num_clusters}', embed_name))
+        scores['sas'][embed_name].append(score_sas(setname, embed_name, num_clusters))
+        scores['jaccard'][embed_name].append(score_jaccard(setname, embed_name, num_clusters))
 
 # Do it for BERT
 for i in range(num_loops):
     clust_any_bert(setname, 'bert', num_clusters)
-    scores['sas']['bert'].append(score_sas(f'{setname}_{num_clusters}', 'bert'))
-    scores['jaccard']['bert'].append(score_jaccard(f'{setname}_{num_clusters}', 'bert'))
+    scores['sas']['bert'].append(score_sas(setname, 'bert', num_clusters))
+    scores['jaccard']['bert'].append(score_jaccard(setname, 'bert', num_clusters))
 
 # Save scores
 print(f'score_loop({setname}_{num_clusters}) ELAPSED(s)', time.process_time() - t0)
