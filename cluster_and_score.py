@@ -118,7 +118,7 @@ def clust_any_bert(setname, embedname, numClusters):
     clust_num = 0
     for key in cluster.keys():
         for post in cluster[key]:
-            transformed_cluster[post[0]] = clust_num
+            transformed_cluster[post] = clust_num
         clust_num += 1
     # print(transformed_cluster)
 
