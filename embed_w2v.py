@@ -47,6 +47,9 @@ def embed_w2v(setname, model=None):
         emb_value = emb_value.rename(columns={'index': 'word'})
         emb_value_list = list(emb_value.iloc[:, 1:301].mul(freq['inv_rfreq'], axis = 0).sum())
         weighted_emb.update({parsed[i]['post_id']:emb_value_list})
+    # We had to do this for the 4400 dataset because
+    # the post had an empty embedding (it was all unknown words)
+    # del weighted_emb['bx8io1']
     # Build SIF (remove first principal component)
     pca = PCA()
     ids = [key for (key, val) in list(weighted_emb.items())]
