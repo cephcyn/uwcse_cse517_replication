@@ -4235,3 +4235,11 @@ failed to read dawnpatrol1943
 failed to read leeroi_v
 scrape_author_data(data/data_sample_4400.csv, data/authorsubs_4400.json) ELAPSED(s) 144.98591032000002
 scrape_author_data ENDED: 20200314-164633
+reading from: data/data_sample_4400.csv
+experiment name: 4400
+  (outputting to: partials/4400_parse.pickle )
+  (outputting to: partials/4400_parse_authors.pickle )
+parse_reddit_csv(data/data_sample_4400.csv, 4400) START: 20200314-202528
+Reading from data/data_sample_4400.csv
+parse_reddit_csv(data/data_sample_4400.csv, 4400) ELAPSED(s) 5.3663304510000005
+parse_reddit_csv ENDED: 20200314-202534

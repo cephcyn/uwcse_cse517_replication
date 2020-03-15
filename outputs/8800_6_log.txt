@@ -7867,3 +7867,11 @@ failed to read iaywwnm
 failed to read tawy2169
 scrape_author_data(data/data_sample_8800.csv, data/authorsubs_8800.json) ELAPSED(s) 503.41468372500003
 scrape_author_data ENDED: 20200314-182929
+reading from: data/data_sample_8800.csv
+experiment name: 8800
+  (outputting to: partials/8800_parse.pickle )
+  (outputting to: partials/8800_parse_authors.pickle )
+parse_reddit_csv(data/data_sample_8800.csv, 8800) START: 20200314-202609
+Reading from data/data_sample_8800.csv
+parse_reddit_csv(data/data_sample_8800.csv, 8800) ELAPSED(s) 10.210884246
+parse_reddit_csv ENDED: 20200314-202620
