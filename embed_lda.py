@@ -68,7 +68,7 @@ def embed_lda(setname):
 
     print(f'embed_lda({setname}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
     t0 = time.process_time()
-    
+
     # Create a dictionary representation of the documents.
     dictionary = Dictionary([parsed[i]['selftext'] for i in range(len(parsed))])
     # print(dictionary)
@@ -91,7 +91,7 @@ def embed_lda(setname):
     print("Generating topics for TFIDF...")
     model_tfidf, sen_top_tfidf = get_topics(dictionary, tfidf[corpus], parsed)
 
-    print(f'embed_lda({setname}) ELAPSED (s)', time.process_time() - t0)
+    print(f'embed_lda({setname}) ELAPSED(s)', time.process_time() - t0)
 
     # Save bow data
     with open(f'partials/{setname}_model_top_bow.pickle', 'wb') as handle:
