@@ -4243,3 +4243,20 @@ parse_reddit_csv(data/data_sample_4400.csv, 4400) START: 20200314-202528
 Reading from data/data_sample_4400.csv
 parse_reddit_csv(data/data_sample_4400.csv, 4400) ELAPSED(s) 5.3663304510000005
 parse_reddit_csv ENDED: 20200314-202534
+experiment name: 4400
+embed_w2v(4400) START: 20200314-203302
+experiment name: 4400
+embed_lda(4400) START: 20200314-203133
+Generating topics for BOW...
+Average topic coherence: -12.7597.
+Generating topics for TFIDF...
+Average topic coherence: -11.9392.
+embed_lda(4400) ELAPSED(s) 264.51174563399996
+embed_lda ENDED: 20200314-203559
+experiment name: 4400
+embed_w2v(4400) START: 20200314-203619
+experiment name: 4400
+embed_w2v(4400) START: 20200314-212937
+embed_w2v(4400) ELAPSED(s) 20.344804279
+embed_w2v ENDED: 20200314-213000
+
