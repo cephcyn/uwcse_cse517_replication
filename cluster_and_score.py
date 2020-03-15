@@ -21,7 +21,7 @@ print('number of loops:', args.num_loops)
 # Code adapted from reference_clusters.ipynb
 # Originally primarily written by Regina Cheng
 
-def Similarity_clustering(similarity_dict, m, n):
+def similarity_clustering(similarity_dict, m, n):
     clusters = {};
     unselected_posts = similarity_dict.copy()
     post_keys = list(unselected_posts.keys())
@@ -79,7 +79,7 @@ def clust_any_ref(setname, embedname, numClusters):
     clust_num = 0
     for key in cluster.keys():
         for post in cluster[key]:
-            transformed_cluster[post[0]] = clust_num
+            transformed_cluster[post] = clust_num
         clust_num += 1
     # print(transformed_cluster)
 
@@ -204,7 +204,7 @@ def score_jaccard(setname, embedname, num_clusters):
 
     intersect_sum = 0
     for clustkey in clusters.keys():
-        ids_in_clust = [i[0] for i in clusters[clustkey]]
+        ids_in_clust = clusters[clustkey]
         for pair in itertools.product(ids_in_clust,ids_in_clust):
             a0 = metadata[pair[0]]['author']
             a1 = metadata[pair[1]]['author']
