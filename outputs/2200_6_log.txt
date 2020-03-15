@@ -118,7 +118,7 @@ Generating topics for BOW...
 Average topic coherence: -4.4784.
 Generating topics for TFIDF...
 Average topic coherence: -3.6176.
-embed_lda(2200) ELAPSED (s) 114.894513624
+embed_lda(2200) ELAPSED(s) 114.894513624
 embed_lda ENDED: 20200314-162124
 experiment name: 2200
 embed_w2v(2200) START: 20200314-162148
