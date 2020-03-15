@@ -21,31 +21,33 @@ print('number of loops:', args.num_loops)
 # Code adapted from reference_clusters.ipynb
 # Originally primarily written by Regina Cheng
 
-def similarity_clustering(similarity_dict, m, n):
+def Similarity_clustering(similarity_dict, m, n):
     clusters = {};
     unselected_posts = similarity_dict.copy()
     post_keys = list(unselected_posts.keys())
     unselected_keys = list(unselected_posts.keys())
     cluster_size = int(np.ceil(n / m))
-    # print(cluster_size)
     while len(unselected_posts) != 0:
         selected_post = random.choice(unselected_keys)
         # labeling the selected row
         emb_dict = dict(zip(post_keys, unselected_posts[selected_post]))
         # only sort the unselected columns
         sim = {k: emb_dict[k] for k in unselected_keys}
-        sim_sort = [k for k in sorted(sim.items(), key=lambda item: item[1])][::-1]
+        sim_sort = [k for k,v in sorted(sim.items(), key=lambda item: item[1])][::-1]
         cluster_size = int(np.ceil(n / m))
-        try:
-            sim_most = sim_sort[0:cluster_size]
-        except:
-            sim_most = sim_sort[0:end]
+        sim_most = sim_sort[0:cluster_size]
+        # Check if the selected post itself is among the most similar posts with it
+        # NOTE: this only happens for bert, as sometimes the post itself was assigned a
+        #lower similarity score with itself
+        if selected_post in sim_most:
+            sim_most = sim_most
+        else:
+            sim_most = sim_most[0:(cluster_size-1)]
+            sim_most.append(selected_post)
         clusters[selected_post] = sim_most
-        # deleted the selected rows from the unselected
         for p in sim_most:
-            del unselected_posts[p[0]]
+            del unselected_posts[p]
         unselected_keys = list(unselected_posts.keys())
-        # print(cluster_size)
     return clusters
 
 def clust_any_ref(setname, embedname, numClusters):
@@ -142,7 +144,7 @@ def score_sas(setname, embedname, num_clusters):
         authors = pickle.load(handle)
 
     print(f'score_sas({setname}, {embedname}, {num_clusters}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
-    print('scoring dataset:', setname, '; embeds:', num_clusters, '; embeds:', num_clusters)
+    print('scoring dataset:', setname, '; embeds:', num_clusters, '; num_clusters:', num_clusters)
     t0 = time.process_time()
 
     num_clust_pair = 0
