@@ -7875,3 +7875,15 @@ parse_reddit_csv(data/data_sample_8800.csv, 8800) START: 20200314-202609
 Reading from data/data_sample_8800.csv
 parse_reddit_csv(data/data_sample_8800.csv, 8800) ELAPSED(s) 10.210884246
 parse_reddit_csv ENDED: 20200314-202620
+experiment name: 8800
+embed_w2v(8800) START: 20200314-203257
+embed_w2v(8800) ELAPSED(s) 54.20249817800001
+embed_w2v ENDED: 20200314-203358
+experiment name: 8800
+embed_lda(8800) START: 20200314-203133
+Generating topics for BOW...
+Average topic coherence: -11.5212.
+Generating topics for TFIDF...
+Average topic coherence: -11.3500.
+embed_lda(8800) ELAPSED(s) 618.418910488
+embed_lda ENDED: 20200314-204153
