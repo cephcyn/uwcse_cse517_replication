@@ -1,0 +1,20 @@
+reading from: data/data_sample_13200.csv
+experiment name: 13200
+  (outputting to: partials/13200_parse.pickle )
+  (outputting to: partials/13200_parse_authors.pickle )
+parse_reddit_csv(data/data_sample_13200.csv, 13200) START: 20200314-202634
+Reading from data/data_sample_13200.csv
+parse_reddit_csv(data/data_sample_13200.csv, 13200) ELAPSED(s) 14.166840060999998
+parse_reddit_csv ENDED: 20200314-202648
+experiment name: 13200
+embed_w2v(13200) START: 20200314-203302
+embed_w2v(13200) ELAPSED(s) 74.012995856
+embed_w2v ENDED: 20200314-203426
+experiment name: 13200
+embed_lda(13200) START: 20200314-203134
+Generating topics for BOW...
+Average topic coherence: -9.3817.
+Generating topics for TFIDF...
+Average topic coherence: -10.2735.
+embed_lda(13200) ELAPSED(s) 1004.0588126629999
+embed_lda ENDED: 20200314-204819
