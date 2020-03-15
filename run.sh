@@ -23,7 +23,7 @@ touch outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt
 # get super large collection of all the posts we'll be using from r/Advice
 # and preprocess and filter that data
 # This only *needs* to be done once ever, but it should be fine if you repeat
-python3 scrape_from_subreddit.py  >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt
+python3 scrape_from_subreddit.py >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt
 
 # break that collection down into smaller experiment sizes
 python3 experiment_sampling.py --num_posts ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt
