@@ -56,5 +56,5 @@ python3 cluster_and_score.py --experiment_name ${EXPERIMENT_SIZE} --num_clusters
 # Produce output files that we can more easily analyze
 python3 print_output.py --experiment_name ${EXPERIMENT_SIZE}_${NUM_CLUSTERS}
 
-echo Scores saved to outputs/${EXPERIMENT_SIZE}_scores.csv
-echo Times saved to outputs/${EXPERIMENT_SIZE}_times.csv
+echo Scores saved to outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_scores.csv
+echo Times saved to outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_times.csv
