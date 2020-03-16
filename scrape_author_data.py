@@ -14,7 +14,8 @@ print(' reading from:', args.csv_file_name)
 print('outputting to:', args.output)
 
 # Collect comment & submission subreddit data for authors in our sample
-# This version is designed to add onto preexisting CSV
+# This version is designed to add onto preexisting JSON
+# so the output file NEEDS to already exist and contain a plaintext {}
 # Code adapted from scraper_authors.ipynb
 # Originally primarily written by Joyce Zhou
 
