@@ -13,7 +13,6 @@ print('experiment name:', args.experiment_name)
 # Originally primarily written by Joyce Zhou
 
 # Print out the experiment cluster scores
-
 with open(f'outputs/{args.experiment_name}_scores.pickle', 'rb') as handle:
     scores = pickle.load(handle)
 
@@ -60,10 +59,6 @@ for score_type in ['sas', 'jaccard']:
 df_scores.to_csv(f'outputs/{args.experiment_name}_scores.csv')
 
 # Print out the experiment runtimes
-
-import pickle
-import pandas as pd
-
 df_times = pd.DataFrame(columns=[
     'func_name',
     'time_elapsed(s)'
@@ -84,7 +79,7 @@ with open(f'outputs/{args.experiment_name}_log.txt') as f:
 df_times.to_csv(f'outputs/{args.experiment_name}_times.csv')
 
 # Get the SAS graph
-sas_data = df_scores_agg.loc[df_scores_agg['scoreType'].str.contains('sas(', regex=False)]
+sas_data = df_scores.loc[df_scores['scoreType'].str.contains('sas(', regex=False)]
 
 scale = alt.Scale(zero=False)
 stdev_err = alt.Chart(sas_data).mark_errorbar(extent='stdev').encode(
@@ -115,7 +110,7 @@ bars = alt.Chart(
 (bars + stdev_err).save(f'outputs/{args.experiment_name}_graph_sas.png', webdriver='firefox')
 
 # Get the Jaccard graph
-jaccard_data = df_scores_agg.loc[df_scores_agg['scoreType'].str.contains('jaccard(', regex=False)]
+jaccard_data = df_scores.loc[df_scores['scoreType'].str.contains('jaccard(', regex=False)]
 
 scale = alt.Scale(zero=False)
 stdev_err = alt.Chart(jaccard_data).mark_errorbar(extent='stdev').encode(
