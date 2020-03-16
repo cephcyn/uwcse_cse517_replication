@@ -4,6 +4,8 @@ from pandas.io.json import json_normalize
 import numpy as np
 import json
 import time
+import praw
+from praw.models import User
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -18,7 +20,7 @@ print('outputting to:', args.output)
 # Code adapted from scraper_authors.ipynb
 # Originally primarily written by Joyce Zhou
 
-print(f'scrape_author_data({args.csv_file_name}, {args.output}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+print(f'scrape_author_data_praw({args.csv_file_name}, {args.output}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
 t0 = time.process_time()
 
 df_posts = pd.read_csv(args.csv_file_name)
@@ -42,6 +44,12 @@ def getAllType(username, contentType):
         created_utc_last = created_utc_last['created_utc'][0]
     return df_content
 
+reddit = praw.Reddit(client_id='',
+                     client_secret='',
+                     user_agent='',
+                     username='',
+                     password='')
+
 # Build subreddit mappings
 # THIS SCRIPT REQUIRES THE FILE TO EXIST ALREADY CONTAINING PLAINTEXT '{}'
 with open(args.output, 'r') as fp:
@@ -50,10 +58,14 @@ with open(args.output, 'r') as fp:
 for username in set(df_posts['author']):
     try:
         if username not in sub_mappings:
-            df_comment = getAllType(username, 'comment').reset_index()
-            df_submission = getAllType(username, 'submission').reset_index()
-            df_comment_set = list(set(df_comment['subreddit'])) if len(df_comment) > 0 else []
-            df_submission_set = list(set(df_submission['subreddit'])) if len(df_submission) > 0 else []
+            person = reddit.redditor(username)
+            contribs = User.karma(person)
+            df_comment_set = []
+            df_submission_set = []
+            for k in contribs.keys():
+                df_submission_set.append(k.display_name)
+                if contribs[k]['comment_karma'] is not 0:
+                    df_comment_set.append(k.display_name)
             sub_mappings[username] = {
                 'comment': df_comment_set,
                 'submission': df_submission_set
@@ -73,5 +85,5 @@ for username in set(df_posts['author']):
 with open(args.output, 'w') as fp:
     json.dump(sub_mappings, fp)
 
-print(f'scrape_author_data({args.csv_file_name}, {args.output}) ELAPSED(s)', time.process_time() - t0)
-print('scrape_author_data ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
+print(f'scrape_author_data_praw({args.csv_file_name}, {args.output}) ELAPSED(s)', time.process_time() - t0)
+print('scrape_author_data_praw ENDED:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
