@@ -1,2 +1,4 @@
 model/*.gz
 model/*.bin
+
+partials/8800_matrix_bert.pickle
