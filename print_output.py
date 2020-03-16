@@ -58,6 +58,14 @@ for score_type in ['sas', 'jaccard']:
 
 df_scores.to_csv(f'outputs/{args.experiment_name}_scores.csv')
 
+# Get a summary of mean, min, max, stdev in table format
+df_scores_agg = df_scores.groupby(['scoreType']).agg({
+    'score': ['mean', 'min', 'max', 'std']
+})
+df_scores_agg.columns = ['score_mean', 'score_min', 'score_max', 'score_stdev']
+df_scores_agg = df_scores_agg.reset_index()
+df_scores_agg.to_csv(f'outputs/{args.experiment_name}_scores_agg.csv')
+
 # Print out the experiment runtimes
 df_times = pd.DataFrame(columns=[
     'func_name',
