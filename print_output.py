@@ -1,5 +1,6 @@
 import pickle
 import pandas as pd
+import altair as alt
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -20,26 +21,41 @@ with open(f'outputs/{args.experiment_name}_scores.pickle', 'rb') as handle:
 # 0: {'sas', 'jaccard'}
 # 1: {'bert', top_tfidf', 'top_bow', 'w2v_weighted', 'w2v_sif'}
 
+df_scores=None
 df_scores = pd.DataFrame(columns=[
-    'sas(bert)',
-    'sas(top_tfidf)',
-    'sas(top_bow)',
-    'sas(w2v_weighted)',
-    'sas(w2v_sif)',
-    'jaccard(bert)',
-    'jaccard(top_tfidf)',
-    'jaccard(top_bow)',
-    'jaccard(w2v_weighted)',
-    'jaccard(w2v_sif)'
+    'scoreType',
+    'score'
 ])
-# There should be an equal number of elems in each score list...
-for i in range(len(scores['sas']['bert'])):
-    # build the row
-    row = {}
-    for score_type in ['sas', 'jaccard']:
-        for model_type in ['bert', 'top_tfidf', 'top_bow', 'w2v_weighted', 'w2v_sif']:
-            row[f'{score_type}({model_type})'] = scores[score_type][model_type][i]
-    df_scores = df_scores.append(row, ignore_index=True)
+for score_type in ['sas', 'jaccard']:
+    for model_type in ['bert', 'top_tfidf', 'top_bow', 'w2v_weighted', 'w2v_sif']:
+        for i in range(len(scores[score_type][model_type])):
+            row = {
+                'scoreType': f'{score_type}({model_type})',
+                'score': scores[score_type][model_type][i]
+            }
+            df_scores = df_scores.append(row, ignore_index=True)
+
+# Old schema: good for google docs, bad for Altair
+# df_scores = pd.DataFrame(columns=[
+#     'sas(bert)',
+#     'sas(top_tfidf)',
+#     'sas(top_bow)',
+#     'sas(w2v_weighted)',
+#     'sas(w2v_sif)',
+#     'jaccard(bert)',
+#     'jaccard(top_tfidf)',
+#     'jaccard(top_bow)',
+#     'jaccard(w2v_weighted)',
+#     'jaccard(w2v_sif)'
+# ])
+# # There should be an equal number of elems in each score list...
+# for i in range(len(scores['sas']['bert'])):
+#     # build the row
+#     row = {}
+#     for score_type in ['sas', 'jaccard']:
+#         for model_type in ['bert', 'top_tfidf', 'top_bow', 'w2v_weighted', 'w2v_sif']:
+#             row[f'{score_type}({model_type})'] = scores[score_type][model_type][i]
+#     df_scores = df_scores.append(row, ignore_index=True)
 
 df_scores.to_csv(f'outputs/{args.experiment_name}_scores.csv')
 
@@ -66,3 +82,65 @@ with open(f'outputs/{args.experiment_name}_log.txt') as f:
             }, ignore_index=True)
 
 df_times.to_csv(f'outputs/{args.experiment_name}_times.csv')
+
+# Get the SAS graph
+sas_data = df_scores_agg.loc[df_scores_agg['scoreType'].str.contains('sas(', regex=False)]
+
+scale = alt.Scale(zero=False)
+stdev_err = alt.Chart(sas_data).mark_errorbar(extent='stdev').encode(
+  x=alt.X('scoreType:N'),
+  y=alt.Y(
+        'score:Q',
+        scale=scale
+    ),
+)
+bars = alt.Chart(
+    sas_data,
+    title='SAS scores for prob. clust. vs baselines'
+).mark_bar().encode(
+    x=alt.X(
+        'scoreType:N',
+        axis=alt.Axis(title='')
+    ),
+    y=alt.Y(
+        'score:Q',
+        aggregate='mean',
+        scale=scale
+    ),
+).properties(
+    width=300,
+    height=200
+)
+
+(bars + stdev_err).save(f'outputs/{args.experiment_name}_graph_sas.png', webdriver='firefox')
+
+# Get the Jaccard graph
+jaccard_data = df_scores_agg.loc[df_scores_agg['scoreType'].str.contains('jaccard(', regex=False)]
+
+scale = alt.Scale(zero=False)
+stdev_err = alt.Chart(jaccard_data).mark_errorbar(extent='stdev').encode(
+  x=alt.X('scoreType:N'),
+  y=alt.Y(
+        'score:Q',
+        scale=scale
+    ),
+)
+bars = alt.Chart(
+    jaccard_data,
+    title='Jaccard scores for prob. clust. vs baselines'
+).mark_bar().encode(
+    x=alt.X(
+        'scoreType:N',
+        axis=alt.Axis(title='')
+    ),
+    y=alt.Y(
+        'score:Q',
+        aggregate='mean',
+        scale=scale
+    ),
+).properties(
+    width=300,
+    height=200
+)
+
+(bars + stdev_err).save(f'outputs/{args.experiment_name}_graph_jaccard.png', webdriver='firefox')

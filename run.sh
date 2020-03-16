@@ -6,8 +6,11 @@ NUM_LOOPS=100
 
 # Before running this script!!!!!
 # STEP 1: make sure you have python dependencies installed
-  # environment needs:
-  # pandas, matplotlib, numpy, sklearn, gensim, nltk, torch, transformers
+  # Python environment needs:
+  # pandas, matplotlib, numpy, sklearn, gensim, nltk, torch, transformers,
+  # altair, selenium
+  # also need to have installed:
+  # geckodriver
 # STEP 2: download the word2vec model (unfortunately can't do this in bash)
   # See model/getModel.sh for notes on how to download the word2vec model
 
