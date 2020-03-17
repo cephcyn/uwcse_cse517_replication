@@ -1,0 +1,12 @@
+experiment name: 13200
+embed_w2v(13200) START: 20200316-192356
+embed_w2v(13200) ELAPSED(s) 91.051623925
+embed_w2v ENDED: 20200316-192545
+experiment name: 13200
+embed_lda(13200) START: 20200316-192203
+Generating topics for BOW...
+Average topic coherence: -10.7712.
+Generating topics for TFIDF...
+Average topic coherence: -8.6769.
+embed_lda(13200) ELAPSED(s) 1362.098964717
+embed_lda ENDED: 20200316-194456
