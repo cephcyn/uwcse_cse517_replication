@@ -1,6 +1,8 @@
 model/*.gz
 model/*.bin
 
+praw
 geckodriver.log
 
 partials/8800_matrix_bert.pickle
+partials/4400_matrix_bert.pickle
