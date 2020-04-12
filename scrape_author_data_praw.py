@@ -25,25 +25,6 @@ t0 = time.process_time()
 
 df_posts = pd.read_csv(args.csv_file_name)
 
-def getAllType(username, contentType):
-    n_posts = 500
-    with urllib.request.urlopen(f"https://api.pushshift.io/reddit/search/{contentType}/?author={username}&sort=asc&size={n_posts}") as url:
-        data = json.loads(url.read().decode())
-        data = data['data']
-    df_content = pd.DataFrame.from_dict(json_normalize(data), orient='columns')
-    if len(df_content) == 0:
-        return df_content
-    created_utc_last = df_content.tail(1)['created_utc'].copy().reset_index()
-    created_utc_last = created_utc_last['created_utc'][0]
-    while len(data) > 0:
-        with urllib.request.urlopen(f"https://api.pushshift.io/reddit/search/{contentType}/?author={username}&sort=asc&size={n_posts}&after={created_utc_last}") as url:
-            data = json.loads(url.read().decode())
-            data = data['data']
-        df_content = df_content.append(pd.DataFrame.from_dict(json_normalize(data), orient='columns'))
-        created_utc_last = df_content.tail(1)['created_utc'].copy().reset_index()
-        created_utc_last = created_utc_last['created_utc'][0]
-    return df_content
-
 reddit = praw.Reddit(client_id='',
                      client_secret='',
                      user_agent='',
