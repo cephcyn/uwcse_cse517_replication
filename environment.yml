@@ -1,4 +1,7 @@
 name: nlp
+channels:
+  - conda-forge
+  - defaults
 dependencies:
   - jupyter
   - gensim
@@ -6,3 +9,7 @@ dependencies:
   - pandas
   - nltk
   - scikit-learn
+  - matplotlib
+  - praw
+  - altair
+  - selenium
