@@ -6,3 +6,6 @@ geckodriver.log
 
 partials/4400_matrix_bertpretrained.pickle
 partials/8800_matrix_bertpretrained.pickle
+partials/4400_matrix_bert.pickle
+partials/8800_matrix_bert.pickle
+partials/13200_matrix_bert.pickle
