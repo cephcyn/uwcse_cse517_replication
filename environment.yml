@@ -13,4 +13,5 @@ dependencies:
   - matplotlib
   - praw
   - altair
+  - altair_saver
   - selenium
