@@ -1,0 +1,30 @@
+reading from: data/data_sample_17600.csv
+experiment name: 17600
+  (outputting to: partials/17600_parse.pickle )
+  (outputting to: partials/17600_parse_authors.pickle )
+parse_reddit_csv(data/data_sample_17600.csv, 17600) START: 20201105-214356
+Reading from data/data_sample_17600.csv
+parse_reddit_csv(data/data_sample_17600.csv, 17600) ELAPSED(s) 34.956545048
+parse_reddit_csv ENDED: 20201105-214432
+experiment name: 17600
+embed_w2v(17600) START: 20201105-214730
+experiment name: 17600
+embed_lda(17600) START: 20201105-214434
+Generating topics for BOW...
+Average topic coherence: -10.7815.
+Generating topics for TFIDF...
+Average topic coherence: -9.1488.
+embed_lda(17600) ELAPSED(s) 27325.728266627997
+embed_lda ENDED: 20201105-223359
+experiment name: 17600
+number of clusters: 30
+number of loops: 100
+score_loop(17600_30) START: 20201106-054043
+clust_any_ref(17600, top_tfidf, 30) START: 20201106-054043
+clustering dataset: 17600 ; embeds: top_tfidf
+clust_any_ref(17600, top_tfidf, 30) ELAPSED(s) 10.899216779
+clust_any_ref ENDED: 20201106-054047
+clust_any_ref(17600, top_bow, 30) START: 20201106-054047
+clustering dataset: 17600 ; embeds: top_bow
+clust_any_ref(17600, top_bow, 30) ELAPSED(s) 12.083399293000001
+clust_any_ref ENDED: 20201106-054050
