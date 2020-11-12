@@ -50,6 +50,8 @@ def embed_w2v(setname, model=None):
     # We had to do this for the 4400 dataset because
     # the post had an empty embedding (it was all unknown words)
     # del weighted_emb['bx8io1']
+    # Likewise for the 17600 dataset...
+    del weighted_emb['dk8zbj']
     # Build SIF (remove first principal component)
     pca = PCA()
     ids = [key for (key, val) in list(weighted_emb.items())]
