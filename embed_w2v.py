@@ -33,25 +33,27 @@ def embed_w2v(setname, model=None):
         counts = Counter(parsed[i]['selftext'])
         freq = pd.DataFrame.from_dict(counts, orient='index').reset_index()
         freq = freq.rename(columns={'index': 'word', 0: 'freq'})
-        # Weight by inverse relative frequency
-        freq['inv_rfreq'] = freq['freq'].sum()/freq['freq']
-        unknowns = []
-        emb_dict = {}
-        for w in freq['word']:
-            try:
-                emb = model[w]
-                emb_dict.update({w:emb})
-            except:
-                unknowns.append(w)
-        emb_value = pd.DataFrame(emb_dict).transpose().reset_index()
-        emb_value = emb_value.rename(columns={'index': 'word'})
-        emb_value_list = list(emb_value.iloc[:, 1:301].mul(freq['inv_rfreq'], axis = 0).sum())
-        weighted_emb.update({parsed[i]['post_id']:emb_value_list})
+        try:
+            # Weight by inverse relative frequency
+            freq['inv_rfreq'] = freq['freq'].sum()/freq['freq']
+            unknowns = []
+            emb_dict = {}
+            for w in freq['word']:
+                try:
+                    emb = model[w]
+                    emb_dict.update({w:emb})
+                except:
+                    unknowns.append(w)
+            emb_value = pd.DataFrame(emb_dict).transpose().reset_index()
+            emb_value = emb_value.rename(columns={'index': 'word'})
+            emb_value_list = list(emb_value.iloc[:, 1:301].mul(freq['inv_rfreq'], axis = 0).sum())
+            weighted_emb.update({parsed[i]['post_id']:emb_value_list})
+        except:
+            # in the case that the post is empty, make some note of this and skip it
+            print('w2v failed for text', parsed[i])
     # We had to do this for the 4400 dataset because
     # the post had an empty embedding (it was all unknown words)
     # del weighted_emb['bx8io1']
-    # Likewise for the 17600 dataset...
-    del weighted_emb['dk8zbj']
     # Build SIF (remove first principal component)
     pca = PCA()
     ids = [key for (key, val) in list(weighted_emb.items())]
