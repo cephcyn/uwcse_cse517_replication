@@ -1,30 +1,37 @@
-reading from: data/data_sample_17600.csv
 experiment name: 17600
-  (outputting to: partials/17600_parse.pickle )
-  (outputting to: partials/17600_parse_authors.pickle )
-parse_reddit_csv(data/data_sample_17600.csv, 17600) START: 20201105-214356
-Reading from data/data_sample_17600.csv
-parse_reddit_csv(data/data_sample_17600.csv, 17600) ELAPSED(s) 34.956545048
-parse_reddit_csv ENDED: 20201105-214432
+embed_w2v(17600) START: 20201112-022329
+w2v failed for text {'author': 'bathwaterdolphin', 'selftext': [], 'title': ['wanna', 'belle', 'delphine', 'halloween', 'parent', 'want', 'buy', 'girl', 'stuff'], 'post_id': 'dk8zbj'}
+embed_w2v(17600) ELAPSED(s) 224.584510696
+embed_w2v ENDED: 20201112-022711
 experiment name: 17600
-embed_w2v(17600) START: 20201105-214730
-experiment name: 17600
-embed_lda(17600) START: 20201105-214434
+embed_lda(17600) START: 20201112-022137
 Generating topics for BOW...
-Average topic coherence: -10.7815.
+Average topic coherence: -9.7966.
 Generating topics for TFIDF...
-Average topic coherence: -9.1488.
-embed_lda(17600) ELAPSED(s) 27325.728266627997
-embed_lda ENDED: 20201105-223359
+Average topic coherence: -10.6643.
+embed_lda(17600) ELAPSED(s) 28406.102456758
+embed_lda ENDED: 20201112-030000
 experiment name: 17600
 number of clusters: 30
 number of loops: 100
-score_loop(17600_30) START: 20201106-054043
-clust_any_ref(17600, top_tfidf, 30) START: 20201106-054043
+score_loop(17600_30) START: 20201112-030001
+clust_any_ref(17600, top_tfidf, 30) START: 20201112-030002
 clustering dataset: 17600 ; embeds: top_tfidf
-clust_any_ref(17600, top_tfidf, 30) ELAPSED(s) 10.899216779
-clust_any_ref ENDED: 20201106-054047
-clust_any_ref(17600, top_bow, 30) START: 20201106-054047
+clust_any_ref(17600, top_tfidf, 30) ELAPSED(s) 14.800995745999998
+clust_any_ref ENDED: 20201112-030009
+clust_any_ref(17600, top_bow, 30) START: 20201112-030010
 clustering dataset: 17600 ; embeds: top_bow
-clust_any_ref(17600, top_bow, 30) ELAPSED(s) 12.083399293000001
-clust_any_ref ENDED: 20201106-054050
+clust_any_ref(17600, top_bow, 30) ELAPSED(s) 14.514399271000002
+clust_any_ref ENDED: 20201112-030017
+clust_any_ref(17600, w2v_weighted, 30) START: 20201112-030018
+clustering dataset: 17600 ; embeds: w2v_weighted
+clust_any_ref(17600, w2v_weighted, 30) ELAPSED(s) 20.513947570999996
+clust_any_ref ENDED: 20201112-030025
+clust_any_ref(17600, w2v_sif, 30) START: 20201112-030028
+clustering dataset: 17600 ; embeds: w2v_sif
+clust_any_ref(17600, w2v_sif, 30) ELAPSED(s) 20.980978869000005
+clust_any_ref ENDED: 20201112-030037
+score_sas(17600, top_tfidf, 30) START: 20201112-030037
+scoring dataset: 17600 ; embeds: 30 ; num_clusters: 30
+score_sas(17600, top_tfidf, 30) ELAPSED(s) 0.004112442000007377
+score_sas ENDED: 20201112-030037
