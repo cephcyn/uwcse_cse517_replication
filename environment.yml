@@ -1,17 +1,17 @@
 name: nlp
 channels:
-  - conda-forge
   - defaults
 dependencies:
-  - python>=3.6.*,<=3.8.*
+  - python[version='>=3.6.*,<=3.8.*']
   - jupyter
-  - gensim
-  - numpy
-  - pandas
   - nltk
-  - scikit-learn
-  - matplotlib
+  - pandas
   - praw
+  - gensim
+  - selenium
   - altair
   - altair_saver
-  - selenium
+  - matplotlib
+  - scikit-learn
+  - numpy
+prefix: /home/cephcyn/miniconda3/envs/nlp
