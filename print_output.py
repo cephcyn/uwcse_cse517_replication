@@ -91,8 +91,8 @@ sas_data = df_scores.loc[df_scores['scoreType'].str.contains('sas(', regex=False
 
 scale = alt.Scale(zero=False)
 stdev_err = alt.Chart(sas_data).mark_errorbar(extent='stdev').encode(
-  x=alt.X('scoreType:N'),
-  y=alt.Y(
+    x=alt.X('scoreType:N'),
+    y=alt.Y(
         'score:Q',
         scale=scale
     ),
@@ -103,7 +103,10 @@ bars = alt.Chart(
 ).mark_bar().encode(
     x=alt.X(
         'scoreType:N',
-        axis=alt.Axis(title='')
+        axis=alt.Axis(
+            title='',
+            labelAngle=-60,
+        ),
     ),
     y=alt.Y(
         'score:Q',
@@ -122,8 +125,10 @@ jaccard_data = df_scores.loc[df_scores['scoreType'].str.contains('jaccard(', reg
 
 scale = alt.Scale(zero=False)
 stdev_err = alt.Chart(jaccard_data).mark_errorbar(extent='stdev').encode(
-  x=alt.X('scoreType:N'),
-  y=alt.Y(
+    x=alt.X(
+        'scoreType:N'
+    ),
+    y=alt.Y(
         'score:Q',
         scale=scale
     ),
