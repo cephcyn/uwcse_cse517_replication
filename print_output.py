@@ -105,8 +105,8 @@ bars = alt.Chart(
         'scoreType:N',
         axis=alt.Axis(
             title='',
-            labelAngle=-60,
-        ),
+            labelAngle=-20
+        )
     ),
     y=alt.Y(
         'score:Q',
@@ -139,7 +139,10 @@ bars = alt.Chart(
 ).mark_bar().encode(
     x=alt.X(
         'scoreType:N',
-        axis=alt.Axis(title='')
+        axis=alt.Axis(
+            title='',
+            labelAngle=-20
+        )
     ),
     y=alt.Y(
         'score:Q',

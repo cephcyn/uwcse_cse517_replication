@@ -6,12 +6,11 @@ dependencies:
   - jupyter
   - nltk
   - pandas
-  - praw
+  - conda-forge::praw
   - gensim
   - selenium
   - altair
-  - altair_saver
+  - conda-forge::altair_saver
   - matplotlib
   - scikit-learn
   - numpy
-prefix: /home/cephcyn/miniconda3/envs/nlp
