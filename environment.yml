@@ -1,4 +1,4 @@
-name: nlp
+name: rescience_rbcluster
 channels:
   - defaults
 dependencies:
