@@ -45,7 +45,7 @@ for username in set(df_posts['author']):
             df_submission_set = []
             for k in contribs.keys():
                 df_submission_set.append(k.display_name)
-                if contribs[k]['comment_karma'] is not 0:
+                if contribs[k]['comment_karma'] != 0:
                     df_comment_set.append(k.display_name)
             sub_mappings[username] = {
                 'comment': df_comment_set,
@@ -54,8 +54,9 @@ for username in set(df_posts['author']):
             print('newly read', username)
         else:
             print('already read', username)
-    except:
+    except Exception as e:
         print('failed to read', username)
+        print('reason:', e)
     finally:
         # save what we have so far if the last read attempt failed
         with open(args.output, 'w') as fp:

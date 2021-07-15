@@ -62,8 +62,9 @@ for username in set(df_posts['author']):
             print('newly read', username)
         else:
             print('already read', username)
-    except:
+    except Exception as e:
         print('failed to read', username)
+        print('reason:', e)
     finally:
         # save what we have so far if the last read attempt failed
         with open(args.output, 'w') as fp:

@@ -13,6 +13,9 @@ NUM_LOOPS=100
   # geckodriver
 # STEP 2: download the word2vec model (unfortunately can't do this in bash)
   # See model/getModel.sh for notes on how to download the word2vec model
+# FAQ / Potential Issues:
+  # Altair unable to export PNG graphs?
+    # Check https://github.com/altair-viz/altair_saver/issues/13
 
 # Note that we ran our experiments primarily from the Jupyter notebooks, so this
 # may be buggy.
@@ -34,6 +37,7 @@ python3 experiment_sampling.py --num_posts ${EXPERIMENT_SIZE} >> outputs/${EXPER
 # get author data for all of the posts in our sample
 echo {} > data/authorsubs_${EXPERIMENT_SIZE}.json
 python3 scrape_author_data_praw.py --csv_file_name data/data_sample_${EXPERIMENT_SIZE}.csv --output data/authorsubs_${EXPERIMENT_SIZE}.json >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt &
+# python3 scrape_author_data.py --csv_file_name data/data_sample_${EXPERIMENT_SIZE}.csv --output data/authorsubs_${EXPERIMENT_SIZE}.json >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt &
 
 # Parse the experiment sample data into something more helpful
 python3 parse_reddit_csv.py --csv_file_name data/data_sample_${EXPERIMENT_SIZE}.csv --experiment_name ${EXPERIMENT_SIZE} >> outputs/${EXPERIMENT_SIZE}_${NUM_CLUSTERS}_log.txt
