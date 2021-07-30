@@ -19,6 +19,7 @@ print('outputting to:', args.output)
 # This version is designed to add onto preexisting CSV
 # Code adapted from scraper_authors.ipynb
 # Originally primarily written by Joyce Zhou
+# NOTE THAT UNLIKE scape_author_data.py, THE PRAW SCRAPER DOES NOT SUPPORT DATE CUTOFF
 
 print(f'scrape_author_data_praw({args.csv_file_name}, {args.output}) START:', time.strftime("%Y%m%d-%H%M%S", time.localtime()))
 t0 = time.process_time()
